@@ -12,24 +12,22 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const environment = urlParams.get('env');
+        let environment = urlParams.get('env');
 
-        document.getElementById('environment').innerText = environment || 'Unknown';
-
-        let imagePath;
-        switch (environment) {
-            case 'test':
-                imagePath = './images/test.jpg';
-                break;
-            case 'production':
-                imagePath = './images/production.jpg';
-                break;
-            case 'development':
-                imagePath = './images/development.jpg';
-                break;
-            default:
-                imagePath = './images/default.jpg'; 
+        // Default to 'test' if 'env' parameter is not provided
+        if (!environment) {
+            environment = 'test';
         }
+
+        document.getElementById('environment').innerText = environment;
+
+        const imagePaths = {
+            test: './images/test.jpg',
+            production: './images/production.jpg',
+            development: './images/development.jpg'
+        };
+
+        const imagePath = imagePaths[environment];
         document.getElementById('environment-image').src = imagePath;
     </script>
 </body>
