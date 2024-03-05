@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  development:
+    build:
+      context: ./Development
+    ports:
+      - "8080:80"
+    volumes:
+      - development_images:/usr/share/nginx/html/images
+  production:
+    build:
+      context: ./Production
+    ports:
+      - "8081:80"
+    volumes:
+      - production_images:/usr/share/nginx/html/images
+  test:
+    build:
+      context: ./Test
+    ports:
+      - "8082:80"
+    volumes:
+      - testing_images:/usr/share/nginx/html/images
+
+volumes:
+  development_images:
+  production_images:
+  testing_images:
