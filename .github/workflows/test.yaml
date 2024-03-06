@@ -1,4 +1,4 @@
-name: Transfer Build Files
+name: Local Deployment
 
 on:
   push:
@@ -6,15 +6,21 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: wsl-test-runner
-
+  deploy_locally:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Changing to project folder
+      - uses: cd /home/ubuntu/Project_Compose/
+
+      - name: Stop and remove existing containers
+        run: docker-compose -f compose_file.yaml down
+
+      - name: Remove existing images
+        run: docker-compose -f compose_file.yaml rm -f
+
       - name: Build and run Docker containers locally
-        run: |
-          cd /home/ubuntu/Project_Compose
-          docker-compose -f compose_file.yaml up -d
+        run: docker-compose -f compose_file.yaml up -d
