@@ -1,0 +1,24 @@
+name: Local Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_locally:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Stop and remove existing containers
+        run: docker-compose -f compose_file.yaml down
+
+      - name: Remove existing images
+        run: docker-compose -f compose_file.yaml rm -f
+
+      - name: Build and run Docker containers locally
+        run: docker-compose -f compose_file.yaml up -d
+
