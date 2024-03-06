@@ -14,7 +14,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         let environment = urlParams.get('env');
 
-        // Default to 'test' if 'env' parameter is not provided
         if (!environment) {
             environment = 'test';
         }
