@@ -19,13 +19,14 @@ jobs:
           ssh-private-key: ${{ secrets.ACTIONS_SSH_PRIVATE_KEY }}
 
       - name: present working directory
-        run:  pwd
+        run: pwd
 
       - name: Stop and remove existing containers
-        run: docker-compose -f compose_file.yaml down
+        run: docker-compose -f /home/ubuntu/Project_Compose/compose_file.yaml down
 
       - name: Remove existing images
-        run: docker-compose -f compose_file.yaml rm -f
+        run: docker-compose -f /home/ubuntu/Project_Compose/compose_file.yaml rm -f
 
       - name: Build and run Docker containers locally
-        run: docker-compose -f compose_file.yaml up -d
+        run: docker-compose -f /home/ubuntu/Project_Compose/compose_file.yaml up -d
+
