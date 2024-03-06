@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy_locally:
-    runs-on: ubuntu-latest
+    runs-on: wsl-test-runner
 
     steps:
       - name: Checkout code
