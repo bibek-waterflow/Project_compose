@@ -1,4 +1,4 @@
-name: Local Deployment
+name: Transfer Build Files
 
 on:
   push:
@@ -6,27 +6,15 @@ on:
       - main
 
 jobs:
-  deploy_locally:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: wsl-test-runner
+
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Use SSH key to access WSL
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.ACTIONS_SSH_PRIVATE_KEY }}
-
-      - name: present working directory
-        run: pwd
-
-      - name: Stop and remove existing containers
-        run: docker-compose -f /home/ubuntu/Project_Compose/compose_file.yaml down
-
-      - name: Remove existing images
-        run: docker-compose -f /home/ubuntu/Project_Compose/compose_file.yaml rm -f
-
       - name: Build and run Docker containers locally
-        run: docker-compose -f /home/ubuntu/Project_Compose/compose_file.yaml up -d
-
+        run: |
+          cd /home/ubuntu/Project_Compose
+          docker-compose -f compose_file.yaml up -d
