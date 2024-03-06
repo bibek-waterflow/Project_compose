@@ -13,6 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Use SSH key to access WSL
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.ACTIONS_SSH_PRIVATE_KEY }}
+
+      - name: Change directory to Project_compose
+        run: cd Project_compose
+
       - name: Stop and remove existing containers
         run: docker-compose -f compose_file.yaml down
 
@@ -21,4 +29,3 @@ jobs:
 
       - name: Build and run Docker containers locally
         run: docker-compose -f compose_file.yaml up -d
-
